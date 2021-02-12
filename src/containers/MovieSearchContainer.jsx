@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import SearchForm from '../components/SearchForm'
+import SearchResults from '../components/SearchResults'
 import {getMoviesByName} from '../services/movies'
 import {initSearchResult, setSearchTerm, setLoading} from '../reducers/moviesReducer'
 
@@ -35,14 +36,10 @@ const handleOnInput = event => {
         handleOnInput={handleOnInput}
         searchTerm={searchTerm}
       />
-      <ul>
-        {searchResult
-          ? searchResult.map(item => (
-            <li key={item.imdbID}><img src={item.Poster} alt={`A poster for ${item.Title}`} />{item.Title}</li>
-          ))
-          : <span>No movies found</span>
-        }
-      </ul>
+      {!!loading
+        ? <div>Loading</div>
+        : <SearchResults searchResult={searchResult} />
+}
     </> 
   )
 }

@@ -1,5 +1,4 @@
 .movie-app {
-  text-align: center;
 }
 
 .header {
@@ -10,4 +9,10 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+.movie-info-container {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
 }

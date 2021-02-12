@@ -10,6 +10,7 @@ import {Provider} from 'react-redux'
 import './index.css'
 import App from './App'
 import MovieSearchContainer from './containers/MovieSearchContainer'
+import MovieInfoContainer from './containers/MovieInfoContainer'
 import moviesReducer from './reducers/moviesReducer'
 
 const store = createStore(moviesReducer)
@@ -20,6 +21,9 @@ ReactDOM.render(
       <Router>
         <App>
           <Switch>
+          <Route path="/movie/:id">
+              <MovieInfoContainer />
+            </Route>
             <Route path="/">
               <MovieSearchContainer />
             </Route>

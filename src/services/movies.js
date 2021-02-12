@@ -5,3 +5,9 @@ export const getMoviesByName = async movieName => {
   const movies = await fetch(url)
   return movies.json()
 }
+
+export const getMovieById = async id => {
+  const url = `${baseUrl}/movie?i=${id}`
+  const movie = await fetch(url)
+  return movie.json()
+}
