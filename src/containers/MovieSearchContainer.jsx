@@ -1,28 +1,31 @@
-import {useState, useEffect} from 'react'
-import SearchForm from "../components/SearchForm"
+import {useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import SearchForm from '../components/SearchForm'
 import {getMoviesByName} from '../services/movies'
+import {initSearchResult, setSearchTerm, setLoading} from '../reducers/moviesReducer'
 
 const MovieSearchContainer = () => {
-  const [searchResult, setSearchResult] = useState([])
-  const [searchTerm, setSearchTerm] = useState('')
-  const [loading, setLoading] = useState(false)
+  const dispatch = useDispatch()
+  const searchResult = useSelector(state => state.searchResult)
+  const searchTerm = useSelector(state => state.searchTerm)
+  const loading = useSelector(state => state.loading)
 
   useEffect(() => {
     const doGetMovies = async () => {
       const response = await getMoviesByName(searchTerm)
-      setSearchResult(response.Search)
-      setLoading(false)
+      dispatch(initSearchResult(response?.Search))
+      dispatch(setLoading(false))
     }
     loading && doGetMovies()
-  }, [loading, searchTerm])
+  }, [loading, searchTerm, dispatch])
 
   const handleSearchButtonClicked = async event => {
     event.preventDefault()
-    setLoading(true)
+    dispatch(setLoading(true))
   }
 
 const handleOnInput = event => {
-  setSearchTerm(event.target.value)
+  dispatch(setSearchTerm(event.target.value))
 }
 
   return (
@@ -33,9 +36,12 @@ const handleOnInput = event => {
         searchTerm={searchTerm}
       />
       <ul>
-        {searchResult.map(item => (
-          <li key={item.imdbID}><img src={item.Poster} alt={`A poster for ${item.Title}`} />{item.Title}</li>
-        ))}
+        {searchResult
+          ? searchResult.map(item => (
+            <li key={item.imdbID}><img src={item.Poster} alt={`A poster for ${item.Title}`} />{item.Title}</li>
+          ))
+          : <span>No movies found</span>
+        }
       </ul>
     </> 
   )

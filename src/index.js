@@ -4,22 +4,29 @@ import {
   BrowserRouter as Router,
   Switch,
   Route
-} from "react-router-dom";
+} from 'react-router-dom';
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
 import './index.css'
 import App from './App'
-import MovieSearchContainer from "./containers/MovieSearchContainer"
+import MovieSearchContainer from './containers/MovieSearchContainer'
+import moviesReducer from './reducers/moviesReducer'
+
+const store = createStore(moviesReducer)
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App>
-        <Switch>
-          <Route path="/">
-            <MovieSearchContainer />
-          </Route>
-      </Switch>
-      </App>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <App>
+          <Switch>
+            <Route path="/">
+              <MovieSearchContainer />
+            </Route>
+        </Switch>
+        </App>
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )
