@@ -16,6 +16,7 @@ const MovieSearchContainer = () => {
       const response = await getMoviesByName(searchTerm)
       dispatch(initSearchResult(response?.Search))
       dispatch(setLoading(false))
+      dispatch(setSearchTerm(''))
     }
     loading && doGetMovies()
   }, [loading, searchTerm, dispatch])
