@@ -3,7 +3,8 @@ const initialState = {
   searchTerm: '',
   loading: false,
   currentMovie: {},
-  currentMovieReview: {}
+  currentMovieReview: {},
+  error: ''
 }
 
 const moviesReducer = (state = initialState, action) => {
@@ -15,6 +16,9 @@ const moviesReducer = (state = initialState, action) => {
     case 'SET_LOADING':
       return {...state, loading: action.payload}
     case 'SET_CURRENT_MOVIE':
+      if (action.payload.error) {
+        return {...state, error: action.payload.error}
+      }
       return {...state, currentMovie: action.payload}
     case 'SET_CURRENT_REVIEW':
       return {...state, currentMovieReview: action.payload}

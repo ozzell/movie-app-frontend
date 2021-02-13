@@ -9,6 +9,7 @@ const MovieInfoContainer = props => {
   const {id} = useParams()
   const currentMovie = useSelector(state => state.currentMovie)
   const currentReview = useSelector(state => state.currentMovieReview)
+  const error = useSelector(state => state.error)
 
   const[loading, setLoading] = useState(true)
   const[loadingReview, setLoadingReview] = useState(true) 
@@ -54,13 +55,28 @@ const MovieInfoContainer = props => {
     }
   }, [dispatch, currentMovie, loadingReview, currentReview, loading])
 
+  if (error) {
+    return <div>{error}</div>
+  }
   return (
     <div className="movie-info-container">
-      {!loading &&
+      {!loading && currentMovie.Title &&
         <>
-          <h1>{currentMovie.Title}</h1>
-          <p>{currentMovie.Year}</p>
+          <h1>{currentMovie.Title} ({currentMovie.Year})</h1>
+          <small>
+            {currentMovie.Genre}
+            <ul>
+              <li><b>Director:</b> {currentMovie.Director}</li>
+              <li><b>Writer:</b> {currentMovie.Writer}</li>
+              <li><b>Actors:</b> {currentMovie.Actors}</li>
+            </ul>
+          </small>
           <p>{currentMovie.Plot}</p>
+          <ul>
+            {currentMovie.Ratings.map(rating => (
+              <li key={rating.Value}>{rating.Value} from {rating.Source}</li>
+            ))}
+          </ul>
           <h2>New York Times Review</h2>
         </>
       }
