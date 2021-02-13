@@ -2,7 +2,8 @@ const initialState = {
   searchResult: [],
   searchTerm: '',
   loading: false,
-  currentMovie: {}
+  currentMovie: {},
+  currentMovieReview: {}
 }
 
 const moviesReducer = (state = initialState, action) => {
@@ -15,6 +16,8 @@ const moviesReducer = (state = initialState, action) => {
       return {...state, loading: action.payload}
     case 'SET_CURRENT_MOVIE':
       return {...state, currentMovie: action.payload}
+    case 'SET_CURRENT_REVIEW':
+      return {...state, currentMovieReview: action.payload}
     default:
       return state
   }
@@ -45,6 +48,13 @@ export const setCurrentMovie = movie => {
   return {
     type: 'SET_CURRENT_MOVIE',
     payload: movie
+  }
+}
+
+export const setCurrentReview = review => {
+  return {
+    type: 'SET_CURRENT_REVIEW',
+    payload: review
   }
 }
 

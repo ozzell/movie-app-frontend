@@ -11,3 +11,9 @@ export const getMovieById = async id => {
   const movie = await fetch(url)
   return movie.json()
 }
+
+export const getReviewByMovieName = async movieName => {
+  const url = `${baseUrl}/review?r=${movieName}`
+  const review = await fetch(url)
+  return review.json()
+}
