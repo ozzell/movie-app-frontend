@@ -31,7 +31,7 @@ const handleOnInput = event => {
 }
 
   return (
-    <>
+    <div className="movie-search-container">
       <SearchForm 
         handleSearchButtonClicked={handleSearchButtonClicked}
         handleOnInput={handleOnInput}
@@ -41,7 +41,7 @@ const handleOnInput = event => {
         ? <div>Loading</div>
         : <SearchResults searchResult={searchResult} />
 }
-    </> 
+    </div> 
   )
 }
 

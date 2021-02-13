@@ -1,9 +1,14 @@
+main {
+  padding: 3rem;
+
+  @media only screen and (max-width: 600px) {
+    padding: 2rem;
+  }
+}
+
 ul {
   list-style: none;
   padding: 0;
-}
-
-.movie-app {
 }
 
 .header {
@@ -16,8 +21,33 @@ ul {
   color: white;
 }
 
+.search-form {
+  display: flex;
+  flex-direction: column;
+}
+
 .movie-info-container {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  a {
+    display: flex;
+    flex-direction: column;
+    width: 18rem;
+  }
+
+  li {
+    margin: 0 2rem 2rem 0;
+  }
+
+  @media only screen and (max-width: 600px) {
+    a {
+      max-width: 100%;
+    }
+  }
 }
