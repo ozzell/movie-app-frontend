@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getMovieById, getReviewByMovieName} from '../services/movies'
 import {setCurrentMovie, setCurrentReview} from '../reducers/moviesReducer'
 import {MoviesState} from '../reducers/types'
+import MovieInfo from '../components/MovieInfo'
+import MovieReview from '../components/MovieReview'
 
 const MovieInfoContainer = (): JSX.Element => {
   const dispatch = useDispatch()
@@ -61,32 +63,8 @@ const MovieInfoContainer = (): JSX.Element => {
   }
   return (
     <div className="movie-info-container">
-      {!loading && currentMovie.Title &&
-        <>
-          <h1>{currentMovie.Title} ({currentMovie.Year})</h1>
-          <small>
-            {currentMovie.Genre}
-            <ul>
-              <li><b>Director:</b> {currentMovie.Director}</li>
-              <li><b>Writer:</b> {currentMovie.Writer}</li>
-              <li><b>Actors:</b> {currentMovie.Actors}</li>
-            </ul>
-          </small>
-          <p>{currentMovie.Plot}</p>
-          <ul>
-            {currentMovie.Ratings?.map(rating => (
-              <li key={rating.Value}>{rating.Value} from {rating.Source}</li>
-            ))}
-          </ul>
-          <h2>New York Times Review</h2>
-        </>
-      }
-      {!loadingReview &&
-      <div>
-        <p>{currentReview?.headline}</p>
-        <p>{currentReview?.summary}</p>
-      </div>
-      }
+      {!loading && currentMovie.Title && <MovieInfo currentMovie={currentMovie} />}
+      {!loadingReview && <MovieReview currentReview={currentReview} />}
     </div>
   )
 }
