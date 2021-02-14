@@ -16,6 +16,11 @@ type Ratings = {
   Value: string
 }
 
+export type ApiMovies = {
+  Search?: SearchMovies
+  error?: string
+}
+
 export type SearchMovies = SearchMovie[] | undefined
 
 export type Movie = {
@@ -48,7 +53,7 @@ export type MoviesState = {
 
 export type InitSearchResultAction = {
   type: typeof INIT_SEARCH_RESULT
-  payload: SearchMovies
+  payload: ApiMovies
 }
 
 export type SetSearchTermAction = {

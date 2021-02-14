@@ -1,10 +1,6 @@
-import {SearchMovies, Movie, Review} from '../reducers/types'
+import {ApiMovies, Movie, Review} from '../reducers/types'
 
 const baseUrl = 'http://localhost:3001'
-
-type ApiMovies = {
-  Search?: SearchMovies
-}
 
 export const getMoviesByName = async (movieName: string): Promise<ApiMovies> => {
   const url = `${baseUrl}/search-movies?s=${movieName}`

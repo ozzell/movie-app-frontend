@@ -6,7 +6,7 @@ import {
   SET_CURRENT_REVIEW,
   MoviesState,
   MoviesActionTypes,
-  SearchMovies,
+  ApiMovies,
   Movie,
   Review,
   InitSearchResultAction,
@@ -28,7 +28,10 @@ const initialState: MoviesState = {
 const moviesReducer = (state = initialState, action: MoviesActionTypes): MoviesState => {
   switch (action.type) {
     case INIT_SEARCH_RESULT:
-      return {...state, searchResult: action.payload}
+      if (action.payload.error) {
+        return {...state, error: action.payload.error}
+      }
+      return {...state, searchResult: action.payload?.Search, error: ''}
     case SET_SEARCH_TERM:
       return {...state, searchTerm: action.payload}
     case SET_LOADING:
@@ -37,7 +40,7 @@ const moviesReducer = (state = initialState, action: MoviesActionTypes): MoviesS
       if (action.payload.error) {
         return {...state, error: action.payload.error}
       }
-      return {...state, currentMovie: action.payload}
+      return {...state, currentMovie: action.payload, error: ''}
     case SET_CURRENT_REVIEW:
       return {...state, currentMovieReview: action.payload}
     default:
@@ -45,7 +48,7 @@ const moviesReducer = (state = initialState, action: MoviesActionTypes): MoviesS
   }
 }
 
-export const initSearchResult = (result: SearchMovies): InitSearchResultAction  => {
+export const initSearchResult = (result: ApiMovies): InitSearchResultAction  => {
   return {
     type: INIT_SEARCH_RESULT,
     payload: result

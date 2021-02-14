@@ -11,11 +11,12 @@ const MovieSearchContainer = (): JSX.Element => {
   const searchResult = useSelector((state: MoviesState) => state.searchResult)
   const searchTerm = useSelector((state: MoviesState) => state.searchTerm)
   const loading = useSelector((state: MoviesState) => state.loading)
+  const error = useSelector((state: MoviesState) => state.error)
 
   useEffect(() => {
     const doGetMovies = async () => {
       const response = await getMoviesByName(searchTerm)
-      dispatch(initSearchResult(response?.Search))
+      dispatch(initSearchResult(response))
       dispatch(setLoading(false))
       dispatch(setSearchTerm(''))
     }
@@ -24,6 +25,9 @@ const MovieSearchContainer = (): JSX.Element => {
 
   const handleSearchButtonClicked = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    if (!searchTerm) {
+      return
+    }
     dispatch(setLoading(true))
   }
 
@@ -40,7 +44,10 @@ const handleOnInput = (event: ChangeEvent<HTMLInputElement>) => {
       />
       {loading
         ? <div>Loading</div>
-        : <SearchResults searchResult={searchResult} />
+        : <SearchResults
+          searchResult={searchResult}
+          error={error}
+          />
 }
     </div> 
   )
