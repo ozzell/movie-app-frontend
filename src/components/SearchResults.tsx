@@ -1,6 +1,11 @@
 import {Link} from 'react-router-dom'
+import {SearchMovies} from '../reducers/types'
 
-const SearchResults = ({searchResult}) => {
+type SearchResultsProps = {
+  searchResult: SearchMovies
+}
+
+const SearchResults = ({searchResult}: SearchResultsProps): JSX.Element => {
   return (
     <ul className="search-results">
         {searchResult
@@ -8,7 +13,7 @@ const SearchResults = ({searchResult}) => {
             <li key={item.imdbID}>
               <Link to={`/movie/${item.imdbID}`}>
                 <img src={item.Poster} alt={`A poster for ${item.Title}`} />
-                {item.Title}
+                {item.Title} ({item.Year})
               </Link>
             </li>
           ))

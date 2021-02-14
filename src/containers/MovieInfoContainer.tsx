@@ -3,13 +3,14 @@ import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {getMovieById, getReviewByMovieName} from '../services/movies'
 import {setCurrentMovie, setCurrentReview} from '../reducers/moviesReducer'
+import {MoviesState} from '../reducers/types'
 
-const MovieInfoContainer = props => {
+const MovieInfoContainer = (): JSX.Element => {
   const dispatch = useDispatch()
-  const {id} = useParams()
-  const currentMovie = useSelector(state => state.currentMovie)
-  const currentReview = useSelector(state => state.currentMovieReview)
-  const error = useSelector(state => state.error)
+  const {id} = useParams<{id: string}>()
+  const currentMovie = useSelector((state: MoviesState) => state.currentMovie)
+  const currentReview = useSelector((state: MoviesState) => state.currentMovieReview)
+  const error = useSelector((state: MoviesState) => state.error)
 
   const[loading, setLoading] = useState(true)
   const[loadingReview, setLoadingReview] = useState(true) 
@@ -73,7 +74,7 @@ const MovieInfoContainer = props => {
           </small>
           <p>{currentMovie.Plot}</p>
           <ul>
-            {currentMovie.Ratings.map(rating => (
+            {currentMovie.Ratings?.map(rating => (
               <li key={rating.Value}>{rating.Value} from {rating.Source}</li>
             ))}
           </ul>

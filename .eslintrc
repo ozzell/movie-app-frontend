@@ -13,9 +13,13 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended"
   ],
+  "env": {
+    "browser": true,
+    "node": true
+  },
   "globals": {
-    "window": true,
-    "document": true,
-    "React": true
+    "React": true,
+    "test": true,
+    "expect": true
   }
 }

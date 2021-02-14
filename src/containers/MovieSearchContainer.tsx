@@ -1,15 +1,16 @@
-import {useEffect} from 'react'
+import {useEffect, ChangeEvent, FormEvent} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import SearchForm from '../components/SearchForm'
 import SearchResults from '../components/SearchResults'
 import {getMoviesByName} from '../services/movies'
 import {initSearchResult, setSearchTerm, setLoading} from '../reducers/moviesReducer'
+import {MoviesState} from '../reducers/types'
 
-const MovieSearchContainer = () => {
+const MovieSearchContainer = (): JSX.Element => {
   const dispatch = useDispatch()
-  const searchResult = useSelector(state => state.searchResult)
-  const searchTerm = useSelector(state => state.searchTerm)
-  const loading = useSelector(state => state.loading)
+  const searchResult = useSelector((state: MoviesState) => state.searchResult)
+  const searchTerm = useSelector((state: MoviesState) => state.searchTerm)
+  const loading = useSelector((state: MoviesState) => state.loading)
 
   useEffect(() => {
     const doGetMovies = async () => {
@@ -21,12 +22,12 @@ const MovieSearchContainer = () => {
     loading && doGetMovies()
   }, [loading, searchTerm, dispatch])
 
-  const handleSearchButtonClicked = async event => {
+  const handleSearchButtonClicked = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     dispatch(setLoading(true))
   }
 
-const handleOnInput = event => {
+const handleOnInput = (event: ChangeEvent<HTMLInputElement>) => {
   dispatch(setSearchTerm(event.target.value))
 }
 
@@ -37,7 +38,7 @@ const handleOnInput = event => {
         handleOnInput={handleOnInput}
         searchTerm={searchTerm}
       />
-      {!!loading
+      {loading
         ? <div>Loading</div>
         : <SearchResults searchResult={searchResult} />
 }
