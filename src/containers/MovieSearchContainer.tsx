@@ -1,10 +1,15 @@
 import {useEffect, ChangeEvent, FormEvent} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import {useLocation, useHistory} from 'react-router-dom'
 import SearchForm from '../components/SearchForm'
 import SearchResults from '../components/SearchResults'
 import {getMoviesByName} from '../services/movies'
 import {initSearchResult, setSearchTerm, setLoading} from '../reducers/moviesReducer'
 import {MoviesState} from '../reducers/types'
+
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+}
 
 const MovieSearchContainer = (): JSX.Element => {
   const dispatch = useDispatch()
@@ -13,12 +18,22 @@ const MovieSearchContainer = (): JSX.Element => {
   const loading = useSelector((state: MoviesState) => state.loading)
   const error = useSelector((state: MoviesState) => state.error)
 
+  const query = useQuery()
+  const history = useHistory()
+
+  useEffect(() => {
+    const searchQuery = query.get('search')
+    if (searchQuery && searchQuery !== searchTerm) {
+      dispatch(setSearchTerm(searchQuery))
+      dispatch(setLoading(true))
+    }
+  }, [history.location.search])
+
   useEffect(() => {
     const doGetMovies = async () => {
       const response = await getMoviesByName(searchTerm)
       dispatch(initSearchResult(response))
       dispatch(setLoading(false))
-      dispatch(setSearchTerm(''))
     }
     loading && doGetMovies()
   }, [loading, searchTerm, dispatch])
@@ -28,6 +43,7 @@ const MovieSearchContainer = (): JSX.Element => {
     if (!searchTerm) {
       return
     }
+    history.push(`/?search=${searchTerm}`)
     dispatch(setLoading(true))
   }
 
