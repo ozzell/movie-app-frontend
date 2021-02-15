@@ -22,7 +22,7 @@ const MovieSearchContainer = (): JSX.Element => {
   const history = useHistory()
 
   useEffect(() => {
-    const searchQuery = query.get('search')
+    const searchQuery = query.get('q')
     if (searchQuery && searchQuery !== searchTerm) {
       dispatch(setSearchTerm(searchQuery))
       dispatch(setLoading(true))
@@ -43,7 +43,7 @@ const MovieSearchContainer = (): JSX.Element => {
     if (!searchTerm) {
       return
     }
-    history.push(`/?search=${searchTerm}`)
+    history.push(`/search?q=${searchTerm}`)
     dispatch(setLoading(true))
   }
 
@@ -57,6 +57,7 @@ const handleOnInput = (event: ChangeEvent<HTMLInputElement>) => {
         handleSearchButtonClicked={handleSearchButtonClicked}
         handleOnInput={handleOnInput}
         searchTerm={searchTerm}
+        loading={loading}
       />
       {loading
         ? <div>Loading</div>

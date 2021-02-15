@@ -21,10 +21,10 @@ ReactDOM.render(
       <Router>
         <App>
           <Switch>
-          <Route path="/movie/:id">
+          <Route path="/movies/:id">
               <MovieInfoContainer />
             </Route>
-            <Route path="/">
+            <Route path={["/", "/search"]}>
               <MovieSearchContainer />
             </Route>
         </Switch>
