@@ -1,4 +1,5 @@
 import {ChangeEvent, FormEvent} from 'react'
+import searchImage from '../images/search-icon.png'
 
 type SearchFormSubmitCallback = (event: FormEvent<HTMLFormElement>) => void
 type SearchFormOnInputCallback = (event: ChangeEvent<HTMLInputElement>) => void
@@ -19,8 +20,12 @@ const SearchForm = ({
   return (
     <form className="search-form" onSubmit={handleSearchButtonClicked}>
       <label htmlFor="search-field">Search for a movie</label>
-      <input value={searchTerm} onInput={handleOnInput} id="search-field" name="search" type="text" />
-      <input disabled={loading} type="submit" value="Search" />
+      <div className="search-controls">
+        <input value={searchTerm} onInput={handleOnInput} id="search-field" name="search" type="text" className="search-box" />
+        <button disabled={loading} type="submit" className="submit-button" aria-label="Search">
+          <img src={searchImage} width="24" alt="Search" />
+        </button>
+      </div>
     </form>
   )
 }

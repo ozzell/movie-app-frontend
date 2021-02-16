@@ -16,7 +16,7 @@ const SearchResults = ({searchResult, error}: SearchResultsProps): JSX.Element =
           <li key={item.imdbID}>
             <Link to={`/movies/${item.imdbID}`}>
               <img src={item.Poster} alt={`A poster for ${item.Title}`} />
-              {item.Title} ({item.Year})
+              <p className="search-movie-title">{item.Title} ({item.Year})</p>
             </Link>
           </li>
           ))

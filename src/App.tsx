@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom';
 import './App.scss'
 
 type AppProps = {
@@ -7,7 +8,9 @@ function App({children}: AppProps): JSX.Element {
   return (
       <div className="movie-app">
         <header className="header">
-            <h1>Movie App</h1>
+          <h1 className="header-title">
+            <Link to="/">Movie App</Link>
+          </h1>
         </header>
         <main>
           {children}
