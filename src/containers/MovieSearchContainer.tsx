@@ -1,4 +1,4 @@
-import {useEffect, ChangeEvent, FormEvent} from 'react'
+import {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useLocation, useHistory} from 'react-router-dom'
 import SearchForm from '../components/SearchForm'
@@ -38,24 +38,9 @@ const MovieSearchContainer = (): JSX.Element => {
     loading && doGetMovies()
   }, [loading, searchTerm, dispatch])
 
-  const handleSearchButtonClicked = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (!searchTerm) {
-      return
-    }
-    history.push(`/search?q=${searchTerm}`)
-    dispatch(setLoading(true))
-  }
-
-const handleOnInput = (event: ChangeEvent<HTMLInputElement>) => {
-  dispatch(setSearchTerm(event.target.value))
-}
-
   return (
     <div className="movie-search-container">
-      <SearchForm 
-        handleSearchButtonClicked={handleSearchButtonClicked}
-        handleOnInput={handleOnInput}
+      <SearchForm
         searchTerm={searchTerm}
         loading={loading}
       />

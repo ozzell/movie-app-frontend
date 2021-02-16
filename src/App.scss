@@ -36,98 +36,96 @@ ul {
   flex-direction: column;
 }
 
-.movie-search-container {
-  .search-form {
+.search-results {
+  display: flex;
+  flex-wrap: wrap;
+
+  a {
     display: flex;
     flex-direction: column;
+    width: 18rem;
+    background-color: $movieAppGray;
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+  }
 
-    label {
-      margin: 0 0 1rem;
-      font-weight: 600;
-    }
+  .search-movie-title {
+    margin-left: .5rem;
+    margin-right: .5rem;
+    font-weight: 600;
 
-    .search-controls {
-      display: flex;
-    }
-
-    .submit-button {
-      background-color: transparent;
-      border: 0;
-      padding: .625rem .625rem 0;
-      line-height: 1.5rem;
-      position: absolute;
-      right: 3rem;
-      cursor: pointer;
-
-      &:hover {
-        transition: .5 ease;
-        opacity: .85
-      }
-    }
-
-    @media only screen and (max-width: 600px) {
-      .search-controls {
-        width: 100%;
-      }
-
-      .submit-button {
-        right: 2rem;
-      }
-    }
-
-    .search-box {
-      padding: .5rem;
-      flex-grow: 24;
-      line-height: 1.5rem;
+    &:hover {
+      text-decoration: underline;
     }
   }
 
-  .search-results {
-    display: flex;
-    flex-wrap: wrap;
-  
+  img {
+    border-radius: 12px 12px 0 0;
+
+    &:hover {
+      transition: .5 ease;
+      opacity: .75
+    }
+  }
+
+  li {
+    margin: 0 2rem 2rem 0;
+  }
+
+  @media only screen and (max-width: 600px) {
     a {
-      display: flex;
-      flex-direction: column;
-      width: 18rem;
-      background-color: $movieAppGray;
-      color: white;
-      border-radius: 12px;
-      text-decoration: none;
+      max-width: 100%;
+      width: min-content;
     }
 
-    .search-movie-title {
-      margin-left: .5rem;
-      margin-right: .5rem;
-      font-weight: 600;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-
-    img {
-      border-radius: 12px 12px 0 0;
-
-      &:hover {
-        transition: .5 ease;
-        opacity: .75
-      }
-    }
-  
     li {
-      margin: 0 2rem 2rem 0;
+      margin-right: 0;
     }
-  
-    @media only screen and (max-width: 600px) {
-      a {
-        max-width: 100%;
-        width: min-content;
-      }
+  }
+}
 
-      li {
-        margin-right: 0;
-      }
+.search-form {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+
+  .search-controls {
+    display: flex;
+  }
+
+  .submit-button {
+    background-color: transparent;
+    border: 0;
+    padding: .625rem .625rem 0;
+    line-height: 1.5rem;
+    position: absolute;
+    right: 3rem;
+    cursor: pointer;
+
+    &:hover {
+      transition: .5 ease;
+      opacity: .85
     }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .search-controls {
+      width: 100%;
+    }
+
+    .submit-button {
+      right: 2rem;
+    }
+  }
+
+  .search-box {
+    padding: .5rem;
+    flex-grow: 24;
+    line-height: 1.5rem;
   }
 }

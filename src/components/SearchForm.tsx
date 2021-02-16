@@ -1,22 +1,31 @@
 import {ChangeEvent, FormEvent} from 'react'
+import {useDispatch} from 'react-redux'
+import {useHistory} from 'react-router-dom'
+import {setSearchTerm, setLoading} from '../reducers/moviesReducer'
 import searchImage from '../images/search-icon.png'
 
-type SearchFormSubmitCallback = (event: FormEvent<HTMLFormElement>) => void
-type SearchFormOnInputCallback = (event: ChangeEvent<HTMLInputElement>) => void
-
 type SearchFormProps = {
-  handleSearchButtonClicked: SearchFormSubmitCallback
-  handleOnInput: SearchFormOnInputCallback
   searchTerm: string
   loading: boolean
 }
 
-const SearchForm = ({
-  handleSearchButtonClicked,
-  handleOnInput,
-  searchTerm,
-  loading
-}: SearchFormProps): JSX.Element => {
+const SearchForm = ({searchTerm, loading}: SearchFormProps): JSX.Element => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+
+  const handleSearchButtonClicked = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!searchTerm) {
+      return
+    }
+    history.push(`/search?q=${searchTerm}`)
+    dispatch(setLoading(true))
+  }
+
+  const handleOnInput = (event: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSearchTerm(event.target.value))
+  }
+
   return (
     <form className="search-form" onSubmit={handleSearchButtonClicked}>
       <label htmlFor="search-field">Search for a movie</label>

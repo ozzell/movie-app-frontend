@@ -21,5 +21,10 @@
     "React": true,
     "test": true,
     "expect": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }

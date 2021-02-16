@@ -4,16 +4,16 @@ export const SET_LOADING = 'SET_LOADING'
 export const SET_CURRENT_MOVIE = 'SET_CURRENT_MOVIE'
 export const SET_CURRENT_REVIEW = 'SET_CURRENT_REVIEW'
 
-type SearchMovie = {
+type Ratings = {
+  Source: string
+  Value: string
+}
+
+export type SearchMovie = {
   Title: string
   Year: string
   imdbID: string
   Poster: string
-}
-
-type Ratings = {
-  Source: string
-  Value: string
 }
 
 export type ApiMovies = {
