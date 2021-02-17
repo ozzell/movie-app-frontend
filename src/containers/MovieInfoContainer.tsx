@@ -11,6 +11,7 @@ import SearchForm from '../components/SearchForm'
 const MovieInfoContainer = (): JSX.Element => {
   const dispatch = useDispatch()
   const {id} = useParams<{id: string}>()
+
   const currentMovie = useSelector((state: MoviesState) => state.currentMovie)
   const currentReview = useSelector((state: MoviesState) => state.currentMovieReview)
   const error = useSelector((state: MoviesState) => state.error)
