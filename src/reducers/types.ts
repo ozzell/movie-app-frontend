@@ -1,3 +1,6 @@
+import {ThunkAction} from 'redux-thunk'
+import {Action} from 'redux'
+
 export const INIT_SEARCH_RESULT = 'INIT_SEARCH_RESULT'
 export const SET_SEARCH_TERM = 'SET_SEARCH_TERM'
 export const SET_LOADING = 'SET_LOADING'
@@ -75,6 +78,13 @@ export type SetCurrentReviewAction = {
   type: typeof SET_CURRENT_REVIEW
   payload: Review
 }
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  MoviesState,
+  unknown,
+  Action<string>
+>
 
 export type MoviesActionTypes = 
   InitSearchResultAction |

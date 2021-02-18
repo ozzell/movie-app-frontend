@@ -6,15 +6,11 @@ import {
   SET_CURRENT_REVIEW,
   MoviesState,
   MoviesActionTypes,
-  ApiMovies,
-  Movie,
-  Review,
-  InitSearchResultAction,
   SetSearchTermAction,
   SetLoadingAction,
-  SetCurrentMovieAction,
-  SetCurrentReviewAction
+  AppThunk
 } from './types'
+import {getMoviesByName, getMovieById, getReviewByMovieName} from '../services/movies'
 
 const initialState: MoviesState = {
   searchResult: [],
@@ -48,10 +44,13 @@ const moviesReducer = (state = initialState, action: MoviesActionTypes): MoviesS
   }
 }
 
-export const initSearchResult = (result: ApiMovies): InitSearchResultAction  => {
-  return {
-    type: INIT_SEARCH_RESULT,
-    payload: result
+export const initSearchResult = (searchTerm: string): AppThunk  => {
+  return async dispatch => {
+    const response = await getMoviesByName(searchTerm)
+    dispatch({
+      type: INIT_SEARCH_RESULT,
+      payload: response
+    })
   }
 }
 
@@ -69,17 +68,23 @@ export const setLoading = (trueOrFalse: boolean): SetLoadingAction => {
   }
 }
 
-export const setCurrentMovie = (movie: Movie): SetCurrentMovieAction => {
-  return {
-    type: SET_CURRENT_MOVIE,
-    payload: movie
+export const setCurrentMovie = (id: string): AppThunk => {
+  return async dispatch => {
+    const response = await getMovieById(id)
+    dispatch({
+      type: SET_CURRENT_MOVIE,
+      payload: response
+    })
   }
 }
 
-export const setCurrentReview = (review: Review): SetCurrentReviewAction => {
-  return {
-    type: SET_CURRENT_REVIEW,
-    payload: review
+export const setCurrentReview = (title: string): AppThunk => {
+  return async dispatch => {
+    const response = await getReviewByMovieName(title)
+    dispatch({
+      type: SET_CURRENT_REVIEW,
+      payload: response
+    })
   }
 }
 

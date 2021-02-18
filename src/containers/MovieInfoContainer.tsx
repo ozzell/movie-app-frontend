@@ -1,7 +1,6 @@
 import {useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import {getMovieById, getReviewByMovieName} from '../services/movies'
 import {setCurrentMovie, setCurrentReview} from '../reducers/moviesReducer'
 import {MoviesState} from '../reducers/types'
 import MovieInfo from '../components/MovieInfo'
@@ -19,48 +18,31 @@ const MovieInfoContainer = (): JSX.Element => {
   const loading = useSelector((state: MoviesState) => state.loading)
 
   const[loadingMovie, setLoadingMovie] = useState(true)
-  const[loadingReview, setLoadingReview] = useState(true) 
-
-  // For useEffect cleanup
-  let isUnmounted = false
+  const[loadingReview, setLoadingReview] = useState(false) 
 
   useEffect(() => {
-    const doGetMovie = async () => {
-      const response = await getMovieById(id)
-      if (isUnmounted) {
-        return
-      }
-      dispatch(setCurrentMovie(response))
-      setLoadingMovie(false)
-    }
     if (currentMovie.imdbID === id) {
       setLoadingMovie(false)
+      setLoadingReview(true)
+      return
     }
 
-    loadingMovie && doGetMovie()
-    return () => {
-      isUnmounted = true
+    if (loadingMovie) {
+      dispatch(setCurrentMovie(id))
+      setLoadingMovie(false)
     }
   }, [dispatch, setLoadingMovie, id, loadingMovie, currentMovie])
 
   useEffect(() => {
-    const doGetReview = async () => {
+    if (currentMovie.Title && loadingReview) {
       if (currentReview.display_title === currentMovie.Title) {
         setLoadingReview(false)
         return
       }
-      const response = await getReviewByMovieName(currentMovie.Title)
-      if (isUnmounted) {
-        return
-      }
-      dispatch(setCurrentReview(response))
+      dispatch(setCurrentReview(currentMovie.Title))
       setLoadingReview(false)
     }
-    !loadingMovie && currentMovie.Title && loadingReview && doGetReview()
-    return () => {
-      isUnmounted = true
-    }
-  }, [dispatch, currentMovie, loadingReview, currentReview, loadingMovie])
+  }, [dispatch, currentMovie, loadingReview, currentReview])
 
   if (error) {
     return <div>{error}</div>
@@ -73,7 +55,7 @@ const MovieInfoContainer = (): JSX.Element => {
         loading={loading}
       />
       {!loadingMovie && currentMovie.Title && <MovieInfo currentMovie={currentMovie} />}
-      {!loadingReview && <MovieReview currentReview={currentReview} />}
+      {!loadingMovie && !loadingReview && <MovieReview currentReview={currentReview} />}
     </div>
   )
 }

@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useLocation, useHistory} from 'react-router-dom'
 import SearchForm from '../components/SearchForm'
 import SearchResults from '../components/SearchResults'
-import {getMoviesByName} from '../services/movies'
 import {initSearchResult, setSearchTerm, setLoading} from '../reducers/moviesReducer'
 import {MoviesState} from '../reducers/types'
 
@@ -30,12 +29,10 @@ const MovieSearchContainer = (): JSX.Element => {
   }, [history.location.search])
 
   useEffect(() => {
-    const doGetMovies = async () => {
-      const response = await getMoviesByName(searchTerm)
-      dispatch(initSearchResult(response))
+    if (loading) {
+      dispatch(initSearchResult(searchTerm))
       dispatch(setLoading(false))
     }
-    loading && doGetMovies()
   }, [loading, searchTerm, dispatch])
 
   return (
