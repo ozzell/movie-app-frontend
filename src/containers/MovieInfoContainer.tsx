@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {setCurrentMovie, setCurrentReview} from '../reducers/moviesReducer'
@@ -17,32 +17,22 @@ const MovieInfoContainer = (): JSX.Element => {
   const searchTerm = useSelector((state: MoviesState) => state.searchTerm)
   const loading = useSelector((state: MoviesState) => state.loading)
 
-  const[loadingMovie, setLoadingMovie] = useState(true)
-  const[loadingReview, setLoadingReview] = useState(false) 
+  const movieIdsMatch = currentMovie.imdbID === id
+  const movieAndReviewTitlesMatch = currentMovie.Title === currentReview.display_title
 
   useEffect(() => {
-    if (currentMovie.imdbID === id) {
-      setLoadingMovie(false)
-      setLoadingReview(true)
+    if (movieIdsMatch) {
       return
     }
-
-    if (loadingMovie) {
-      dispatch(setCurrentMovie(id))
-      setLoadingMovie(false)
-    }
-  }, [dispatch, setLoadingMovie, id, loadingMovie, currentMovie])
+    dispatch(setCurrentMovie(id))
+  }, [dispatch, id, currentMovie.imdbID])
 
   useEffect(() => {
-    if (currentMovie.Title && loadingReview) {
-      if (currentReview.display_title === currentMovie.Title) {
-        setLoadingReview(false)
-        return
-      }
-      dispatch(setCurrentReview(currentMovie.Title))
-      setLoadingReview(false)
+    if (movieAndReviewTitlesMatch) {
+      return
     }
-  }, [dispatch, currentMovie, loadingReview, currentReview])
+    currentMovie.Title && dispatch(setCurrentReview(currentMovie.Title))
+  }, [dispatch, currentMovie.Title, currentReview.display_title])
 
   if (error) {
     return <div>{error}</div>
@@ -54,8 +44,8 @@ const MovieInfoContainer = (): JSX.Element => {
         searchTerm={searchTerm}
         loading={loading}
       />
-      {!loadingMovie && currentMovie.Title && <MovieInfo currentMovie={currentMovie} />}
-      {!loadingMovie && !loadingReview && <MovieReview currentReview={currentReview} />}
+      {movieIdsMatch && <MovieInfo currentMovie={currentMovie} />}
+      {movieAndReviewTitlesMatch && <MovieReview currentReview={currentReview} />}
     </div>
   )
 }

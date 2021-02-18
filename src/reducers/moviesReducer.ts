@@ -51,6 +51,7 @@ export const initSearchResult = (searchTerm: string): AppThunk  => {
       type: INIT_SEARCH_RESULT,
       payload: response
     })
+    dispatch(setLoading(false))
   }
 }
 

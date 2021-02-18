@@ -31,7 +31,6 @@ const MovieSearchContainer = (): JSX.Element => {
   useEffect(() => {
     if (loading) {
       dispatch(initSearchResult(searchTerm))
-      dispatch(setLoading(false))
     }
   }, [loading, searchTerm, dispatch])
 
@@ -44,8 +43,8 @@ const MovieSearchContainer = (): JSX.Element => {
       {loading
         ? <div>Loading</div>
         : <SearchResults
-          searchResult={searchResult}
-          error={error}
+            searchResult={searchResult}
+            error={error}
           />
 }
     </div> 
