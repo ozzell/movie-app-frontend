@@ -15,12 +15,12 @@
   ],
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "globals": {
     "React": true,
-    "test": true,
-    "expect": true
+    "test": true
   },
   "settings": {
     "react": {
