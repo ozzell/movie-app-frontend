@@ -24,8 +24,8 @@ const initialState: MoviesState = {
 const moviesReducer = (state = initialState, action: MoviesActionTypes): MoviesState => {
   switch (action.type) {
     case INIT_SEARCH_RESULT:
-      if (action.payload.error) {
-        return {...state, error: action.payload.error}
+      if (action.payload.Error) {
+        return {...state, error: action.payload.Error}
       }
       return {...state, searchResult: action.payload?.Search, error: ''}
     case SET_SEARCH_TERM:
@@ -33,8 +33,8 @@ const moviesReducer = (state = initialState, action: MoviesActionTypes): MoviesS
     case SET_LOADING:
       return {...state, loading: action.payload}
     case SET_CURRENT_MOVIE:
-      if (action.payload.error) {
-        return {...state, error: action.payload.error}
+      if (action.payload.Error) {
+        return {...state, error: action.payload.Error}
       }
       return {...state, currentMovie: action.payload, error: ''}
     case SET_CURRENT_REVIEW:

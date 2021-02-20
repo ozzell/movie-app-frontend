@@ -8,14 +8,14 @@ const MovieInfo = ({currentMovie}: MovieInfoProps): JSX.Element => {
   return (
     <div>
       <h1>{currentMovie.Title} ({currentMovie.Year})</h1>
-      <small>
+      <div>
         {currentMovie.Genre}
         <ul>
           <li><b>Director:</b> {currentMovie.Director}</li>
           <li><b>Writer:</b> {currentMovie.Writer}</li>
           <li><b>Actors:</b> {currentMovie.Actors}</li>
         </ul>
-      </small>
+      </div>
       <p>{currentMovie.Plot}</p>
       <ul>
         {currentMovie.Ratings?.map(rating => (

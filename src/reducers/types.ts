@@ -21,13 +21,13 @@ export type SearchMovie = {
 
 export type ApiMovies = {
   Search?: SearchMovies
-  error?: string
+  Error?: string
 }
 
 export type SearchMovies = SearchMovie[] | undefined
 
 export type Movie = {
-  error?: string
+  Error?: string
   Actors?: string
   Director?: string
   Genre?: string
